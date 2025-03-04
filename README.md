@@ -4,7 +4,7 @@
 
 - ## 🔧 Getting Started
 
-- 1️⃣ Clone & Install:
+- 1️⃣ Install:
 
 - cd grammar-checker
 - npm install
