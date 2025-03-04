@@ -5,6 +5,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Input from "../compnents/Form/Input";
 import "../styles/styles.css";
+import Button from "../compnents/Form/Button";
+import Spinner from "../compnents/Spinner";
+import FormFooter from "../compnents/Form/FormFooter";
 
 const Signup = () => {
   const router = useRouter();
@@ -93,17 +96,14 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit" className="btn" disabled={loading}>
-          {loading ? "Signing Up..." : "Signup"}
-        </button>
+        <Button loading={loading} label={loading ? <Spinner /> : "Signup"} />
       </form>
 
-      <p className="label">
-        Already have an account?{" "}
-        <a href="/login" className="toggle">
-          Login
-        </a>
-      </p>
+      <FormFooter
+        label="Already have an account?"
+        navigateLabel="Login"
+        navigate="/login"
+      />
     </div>
   );
 };

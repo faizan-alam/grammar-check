@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import connectionDatabase from "@/lib/mongoose";
-import User from "@/models/User";
+import connectionDatabase from "../../../lib/mongoose";
+import User from "../../../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -35,10 +35,19 @@ export async function POST(req) {
       { expiresIn: "1h" }
     );
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Login successful.", accessToken, user },
       { status: 200 }
     );
+
+    response.cookies.set("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60,
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     return NextResponse.json(
       { message: "Server error.", error: error.message },

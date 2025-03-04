@@ -4,8 +4,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Input from "../compnents/Form/Input";
 import "../styles/styles.css";
+import { useAuth } from "../context/authContext";
+import Spinner from "../compnents/Spinner";
+import Button from "../compnents/Form/Button";
+import FormFooter from "../compnents/Form/FormFooter";
 
 export default function Login() {
+  const { signIn } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -40,8 +45,7 @@ export default function Login() {
     try {
       const response = await axios.post("/api/login", formData);
       if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response?.data?.user));
-        toast.success("Login Successful");
+        signIn(response?.data.user);
       } else {
         toast.error(result.message || "Invalid email or password.", false);
       }
@@ -72,16 +76,13 @@ export default function Login() {
           onChange={handleChange}
           required
         />
-        <button type="submit" className="btn" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
+        <Button loading={loading} label={loading ? <Spinner /> : "Login"} />
       </form>
-      <p className="label">
-        Don't have an account?{" "}
-        <a href="/frontend/signup.html" className="toggle">
-          Sign up
-        </a>
-      </p>
+      <FormFooter
+        label="Don't have an account?"
+        navigateLabel="Sign Up"
+        navigate="signup"
+      />
     </div>
   );
 }

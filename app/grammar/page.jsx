@@ -1,41 +1,45 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { diff_match_patch } from "diff-match-patch";
-import '../styles/home.css'
+import "../styles/home.css";
 import { toast } from "react-toastify";
+import isAuth from "../compnents/IsAuth";
+import axios from "axios";
+import { useAuth } from "../context/authContext";
+import Button from "../compnents/Form/Button";
+import Spinner from "../compnents/Spinner";
 
-export default function GrammarChecker() {
+const GrammarChecker = () => {
+  const { signOut } = useAuth();
   const [inputText, setInputText] = useState("");
   const [correctedText, setCorrectedText] = useState("");
   const [incorrectText, setIncorrectText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showgrammar, setShowGrammar] = useState(false)
+  const [showgrammar, setShowGrammar] = useState(false);
 
   const checkGrammar = async () => {
-      if (!inputText.trim()) {
-    toast.error('Please enter some text.');
+    if (!inputText.trim()) {
+      toast.error("Please enter some text.");
 
-          return;
-        }    
-    setShowGrammar(true)
+      return;
+    }
+    setShowGrammar(true);
     setLoading(true);
     setCorrectedText("Checking grammar...");
     setIncorrectText("Checking grammar...");
 
     try {
-      const response = await fetch(
-        "https://grammar-check-mocha.vercel.app/api/check-grammar",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: inputText }),
-        }
-      );
+      const response = await axios.post("/api/check-grammar", {
+        text: inputText,
+      });
 
-      const data = await response.json();
-      if (data.correctedText) {
-        setCorrectedText(highlightChanges(inputText, data.correctedText, "corrected"));
-        setIncorrectText(highlightChanges(data.correctedText, inputText, "incorrect"));
+      if (response?.data.correctedText) {
+        setCorrectedText(
+          highlightChanges(inputText, response?.data.correctedText, "corrected")
+        );
+        setIncorrectText(
+          highlightChanges(response?.data.correctedText, inputText, "incorrect")
+        );
       } else {
         setCorrectedText("Error: Unable to process the request.");
         setIncorrectText("Error: Unable to process the request.");
@@ -56,7 +60,11 @@ export default function GrammarChecker() {
 
     return diffs.map(([operation, text], index) => {
       if (operation === 1) {
-        return <span key={index} className={`highlighted ${type}`}>{text}</span>;
+        return (
+          <span key={index} className={`highlighted ${type}`}>
+            {text}
+          </span>
+        );
       } else {
         return text;
       }
@@ -64,28 +72,44 @@ export default function GrammarChecker() {
   };
 
   return (
-    <div className="container">
-      <h1>Grammar Checker</h1>
-      <textarea
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-        placeholder="Enter text..."
-      ></textarea>
-      <button onClick={checkGrammar} className="btn" disabled={loading}>
-        {loading ? "Checking..." : "Check Grammar"}
-      </button>
-      
-      {showgrammar && <div className={`result-container`}>
-        <div className="card">
-          <div className="card-title">Corrected Version:</div>
-          <div className="corrected">{correctedText}</div>
-        </div>
+    <div className="flex flex-col w-full justify-center items-center">
+      <div className="absolute top-5 right-5 mb-10">
+        <Button
+          loading={loading}
+          onClick={signOut}
+          label={loading ? <Spinner /> : "Logout"}
+        />
+      </div>
 
-        <div className="card">
-          <div className="card-title">Incorrect Version:</div>
-          <div className="incorrect">{incorrectText}</div>
-        </div>
-      </div>}
+      <div className="container w-full">
+        <h1 className="font-bold text-2xl">Grammar Checker</h1>
+        <textarea
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          placeholder="Enter text..."
+        ></textarea>
+        <Button
+          loading={loading}
+          label={loading ? <Spinner /> : "Check Grammar"}
+          onClick={checkGrammar}
+        />
+
+        {showgrammar && (
+          <div className={`result-container`}>
+            <div className="card">
+              <div className="card-title">Corrected Version:</div>
+              <div className="corrected">{correctedText}</div>
+            </div>
+
+            <div className="card">
+              <div className="card-title">Incorrect Version:</div>
+              <div className="incorrect">{incorrectText}</div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};
+
+export default isAuth(GrammarChecker);
