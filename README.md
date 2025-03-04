@@ -6,7 +6,6 @@
 
 - 1️⃣ Clone & Install:
 
-- git clone https://github.com/mahsankhan-dev/grammar-checker.git
 - cd grammar-checker
 - npm install
 
@@ -31,4 +30,4 @@
 
 ## 📽️ Demo Video
 
-🔹 Click the thumbnail or [watch the demo here](https://streamable.com/o7ly36).
+🔹 Click the thumbnail or [watch the demo here](https://streamable.com/rc3kna).
