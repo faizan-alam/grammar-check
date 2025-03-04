@@ -99,18 +99,18 @@ const GrammarChecker = () => {
 
           {showgrammar && (
             <div className="mt-5">
-              <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <div className="bg-white text-center p-4 rounded-lg shadow-md mb-4">
                 <div className="font-bold text-gray-800 mb-2">
                   Corrected Version:
                 </div>
-                <div className="corrected">{correctedText}</div>
+                <div className="corrected text-black">{correctedText}</div>
               </div>
 
-              <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <div className="bg-white text-center p-4 rounded-lg shadow-md mb-4">
                 <div className="font-bold text-gray-800 mb-2">
                   Incorrect Version:
                 </div>
-                <div className="incorrect">{incorrectText}</div>
+                <div className="incorrect text-black">{incorrectText}</div>
               </div>
             </div>
           )}

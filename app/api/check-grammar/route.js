@@ -13,19 +13,38 @@ export async function POST(req) {
     }
 
     const response = await axios.post(
-      "https://grammar-check-mocha.vercel.app/api/check-grammar",
-      { text },
-      { headers: { "Content-Type": "application/json" } }
+      `${process.env.OPEN_AI_URL}/completions`,
+      {
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "user",
+            content: `Fix grammatical errors in this text and return only the corrected version without any additional text or quotes: "${text}"`,
+          },
+        ],
+        temperature: 0.2,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
 
-    if (!response.data.correctedText) {
+    if (!response.data.choices||!response.data.choices?.length) {
       return NextResponse.json(
         { error: "Unable to process the request." },
         { status: 500 }
       );
     }
+    let correctedText = response.data.choices[0].message.content;
+    correctedText = correctedText.replace(/^"(.*)"$/, "$1");
 
-    return NextResponse.json(response.data);
+    return NextResponse.json({
+      originalText: text,
+      correctedText: correctedText,
+    });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
