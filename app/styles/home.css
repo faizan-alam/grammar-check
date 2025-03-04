@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+  }
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    resize: vertical;
+    min-height: 120px;
+  }
+  .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  .result-container {
+    margin-top: 20px;
+    /* display: none; */
+  }
+  .card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  .card-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  .highlighted {
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  .corrected .highlighted {
+    background-color: #c8e6c9;
+  }
+  .incorrect .highlighted {
+    background-color: #ffcccb;
+  }
+  @media (max-width: 600px) {
+    .container {
+      padding: 15px;
+      border-radius: 8px;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    textarea {
+      font-size: 14px;
+      padding: 10px;
+      min-height: 80px;
+    }
+    .btn {
+      font-size: 16px;
+      padding: 10px;
+    }
+    .card {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
