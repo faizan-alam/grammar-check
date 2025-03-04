@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { diff_match_patch } from "diff-match-patch";
-import "../styles/home.css";
 import { toast } from "react-toastify";
 import isAuth from "../compnents/IsAuth";
 import axios from "axios";
@@ -72,41 +71,50 @@ const GrammarChecker = () => {
   };
 
   return (
-    <div className="flex flex-col w-full justify-center items-center">
-      <div className="absolute top-5 right-5 mb-10">
-        <Button
-          loading={loading}
-          onClick={signOut}
-          label={loading ? <Spinner /> : "Logout"}
-        />
-      </div>
+    <div className="font-sans bg-gray-100 m-0 p-5 flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col w-full justify-center items-center">
+        <div className="absolute top-5 right-5 mb-10">
+          <Button
+            loading={loading}
+            onClick={signOut}
+            label={loading ? <Spinner /> : "Logout"}
+          />
+        </div>
 
-      <div className="container w-full">
-        <h1 className="font-bold text-2xl">Grammar Checker</h1>
-        <textarea
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="Enter text..."
-        ></textarea>
-        <Button
-          loading={loading}
-          label={loading ? <Spinner /> : "Check Grammar"}
-          onClick={checkGrammar}
-        />
+        <div className="w-11/12 max-w-[600px] bg-white p-5 rounded-lg shadow-md">
+          <h1 className="font-bold text-2xl text-gray-800 text-center mb-4">
+            Grammar Checker
+          </h1>
+          <textarea
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Enter text..."
+            className="w-full p-3 border border-gray-300 rounded-md box-border text-base resize-y min-h-[120px]"
+          ></textarea>
+          <Button
+            loading={loading}
+            label={loading ? <Spinner /> : "Check Grammar"}
+            onClick={checkGrammar}
+          />
 
-        {showgrammar && (
-          <div className={`result-container`}>
-            <div className="card">
-              <div className="card-title">Corrected Version:</div>
-              <div className="corrected">{correctedText}</div>
+          {showgrammar && (
+            <div className="mt-5">
+              <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+                <div className="font-bold text-gray-800 mb-2">
+                  Corrected Version:
+                </div>
+                <div className="corrected">{correctedText}</div>
+              </div>
+
+              <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+                <div className="font-bold text-gray-800 mb-2">
+                  Incorrect Version:
+                </div>
+                <div className="incorrect">{incorrectText}</div>
+              </div>
             </div>
-
-            <div className="card">
-              <div className="card-title">Incorrect Version:</div>
-              <div className="incorrect">{incorrectText}</div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

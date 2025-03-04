@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.highlighted {
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+.corrected .highlighted {
+  background-color: #c8e6c9;
+}
+.incorrect .highlighted {
+  background-color: #ffcccb;
+}

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Input from "../compnents/Form/Input";
-import "../styles/styles.css";
 import { useAuth } from "../context/authContext";
 import Spinner from "../compnents/Spinner";
 import Button from "../compnents/Form/Button";
@@ -57,32 +56,34 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
-      <h2 className="font-bold text-2xl">Login</h2>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
+    <div className="flex justify-center items-center h-screen p-5 bg-gray-200">
+      <div className="min-w-[320px] w-[600px] max-w-[600px] bg-white p-5 shadow-md rounded-lg text-center relative">
+        <h2 className="font-bold text-2xl text-black">Login</h2>
+        <form onSubmit={handleSubmit} className="my-5 mx-0">
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <Button loading={loading} label={loading ? <Spinner /> : "Login"} />
+        </form>
+        <FormFooter
+          label="Don't have an account?"
+          navigateLabel="Sign Up"
+          navigate="signup"
         />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <Button loading={loading} label={loading ? <Spinner /> : "Login"} />
-      </form>
-      <FormFooter
-        label="Don't have an account?"
-        navigateLabel="Sign Up"
-        navigate="signup"
-      />
+      </div>
     </div>
   );
 }

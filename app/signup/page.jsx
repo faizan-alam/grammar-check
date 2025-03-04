@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Input from "../compnents/Form/Input";
-import "../styles/styles.css";
 import Button from "../compnents/Form/Button";
 import Spinner from "../compnents/Spinner";
 import FormFooter from "../compnents/Form/FormFooter";
@@ -68,42 +67,44 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-2xl font-bold">Signup</h2>
+    <div className="flex justify-center items-center h-screen p-5 bg-gray-200">
+      <div className="min-w-[320px] w-[600px] max-w-[600px] bg-white p-5 shadow-md rounded-lg text-center relative">
+        <h2 className="text-2xl font-bold">Signup</h2>
 
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          name="firstName"
-          placeholder="Full Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <Button loading={loading} label={loading ? <Spinner /> : "Signup"} />
-      </form>
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="firstName"
+            placeholder="Full Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <Button loading={loading} label={loading ? <Spinner /> : "Signup"} />
+        </form>
 
-      <FormFooter
-        label="Already have an account?"
-        navigateLabel="Login"
-        navigate="/login"
-      />
+        <FormFooter
+          label="Already have an account?"
+          navigateLabel="Login"
+          navigate="/login"
+        />
+      </div>
     </div>
   );
 };
